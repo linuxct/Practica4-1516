@@ -12,12 +12,11 @@ __start:
 reiniciar:        
 	seq $t7,$t0,$t1		# si a0 es 3 (a1), establece 1 en t7
 	bgtz $t7,end		# si t7 es mayor que 0, salta a end
-	
-	subu $sp,$sp, 8		# hacemos hueco en la pila para 8 bytes // convenio guardar invocador
-	sw  $t0,4($sp)		# guardamos t0 en pila
-
+	subu $sp,$sp, 8		# Hacemos hueco en la pila para 8 bytes // convenio guardar invocador
+	sw  $t0,4($sp)		# Guardamos t0 en pila
 	jal rutina			# JAL, salta a rutina
-	
+	lw $t0,4($sp)		# cargamos de pila t0
+	add $sp,$sp,8		# Deshacemos el hueco que hemos utiizado en la pila moviendo el puntero 8 posiciones arriba
 	add $t0,$t0,1		# suma 1 al contador t0
 	j reiniciar			# saltamos a reiniciar
 
@@ -39,12 +38,10 @@ put_int:
 	jr $31				# vuelve a la rutina anterior
 
 return:		           
-	lw $t0,4($sp)		# cargamos de pila t0
 	lw $31,0($sp)		# cargamos de pila la return address
-	add $sp,$sp,8		# Deshacemos el hueco que hemos utiizado en la pila moviendo el puntero 8 posiciones arriba
 	jr $31				# volvemos a la rutina anterior
 	
-end:	
+end:
 	la $a0,cad1			# cargamos cad_1 para mostrarla por pantalla
 	li $v0,4			# escribe cadena de texto
 	syscall				# llamada al sistema
