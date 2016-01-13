@@ -1,7 +1,7 @@
 .data
 
 entero: 	.asciiz "Introduzca un Entero: "
-resultado:  .asciiz "El resultado de la ecuacion recursiva f(x) = [(x+1) + f(x-1)] es: "
+resultado:  .asciiz "El resultado de la ecuacion recursiva f(x) = [(x^2) + f(x-1)] es: "
 	.text
 	.globl __start
 
@@ -16,7 +16,7 @@ __start:
 		syscall 			# llamada al sistema
 
 		add $a0,$v0,0 		# "movemos" de v0 a a0 
-		add $a1,$a0,1		# b = a+1
+		mul $a1,$a0,$a0		# b = a*a
 		jal buc				# JAL, salta a Bucle
 
 		add $t0,$v0,0		# "movemos" el resultado de v0 a t0
@@ -43,7 +43,7 @@ continue:
 		addi $a0, $v1,-1 	# Guardamos n=n-1
 		jal buc 		    # JAL, salta a bucle
 		lw $v1,4($29) 		# Cargamos n en v1 desde la pila
-		add $v1,$v1,1		# Sumamos +1
+		mul $v1,$v1,$v1		# Multiplicamos por si mismo v1
 		add $v0,$v0,$v1 	# Sumamos v0+v1 y lo guardamos en v0 
 
 return: 	
