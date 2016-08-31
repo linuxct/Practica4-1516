@@ -23,8 +23,8 @@ seguir:
 	lw $v1, 4($sp)	            
 	addi $a0, $v1, -1	            
 	jal recur		            
-	lw $v1, 4($sp)	    # esta parte nunca se ejecuta?  
-	add $v0,$v0,$v1     # 
+	lw $v1, 4($sp)	  
+	add $v0,$v0,$v1     
 
 volver:
 	lw $ra, 0($sp)	            
